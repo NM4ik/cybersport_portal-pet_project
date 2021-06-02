@@ -74,7 +74,13 @@ export default [
     path: '/administration',
     name: 'admin',
     meta: { layout: 'admin_layout' },
-    component: () => import('@/views/publicComponents/adminpage/admin.vue'),
+  },
+
+  {
+    path: '/LogIn',
+    name: 'login',
+    meta: { layout: 'autorize_layout', requiresAuth: false },
+    component: () => import('@/layouts/authorizationLayout/Login.vue'),
   },
   
   

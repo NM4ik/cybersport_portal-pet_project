@@ -64,5 +64,12 @@ class PlayerRetrieveSeriallizer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class DisciplineRetrieveSeriallizer(serializers.ModelSerializer):
+
+    class Meta:
+        model = discipline
+        fields = "__all__"
+
+
 
 

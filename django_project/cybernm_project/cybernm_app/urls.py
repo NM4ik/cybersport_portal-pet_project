@@ -13,6 +13,7 @@ urlpatterns = [
     path("Allnews/", views.newsListView.as_view()),
     path("Onetournament/<int:pk>/", views.tournamentsRetrieveView.as_view()),
     path("Oneplayer/<pk>/", views.PlayerRetrieveView.as_view()),
+    path("Onediscipline/<int:pk>/", views.DisciplineRetrieveView.as_view()),
     path("Addtournament/", views.AddTournament.as_view()),
     path("Deletetournament/<int:pk>/", views.tournamentsDesytoyView.as_view()),
     path("Updatetournament/<int:pk>/", views.tournamentsUpdateView.as_view()),

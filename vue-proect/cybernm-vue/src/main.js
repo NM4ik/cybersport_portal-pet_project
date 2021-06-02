@@ -15,6 +15,7 @@ Vue.component('fa', FontAwesomeIcon)
 Vue.use(Vuetify);
 Vue.component('public_layout', () => import('@/layouts/publicLayout/Index'));
 Vue.component('admin_layout', () => import('@/layouts/adminLayout/Index'));
+Vue.component('autorize_layout', () => import('@/layouts/authorizationLayout/Index'));
 
 new Vue({
   router,

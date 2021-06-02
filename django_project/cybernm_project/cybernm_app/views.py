@@ -40,6 +40,11 @@ class PlayerRetrieveView(generics.RetrieveAPIView):
     queryset = player.objects.filter()
 
 
+class DisciplineRetrieveView(generics.RetrieveAPIView):
+    serializer_class = DisciplineRetrieveSeriallizer
+    queryset = discipline.objects.filter()
+
+
 class AddTournament(generics.CreateAPIView):
     serializer_class = tournamentsCreateSeriallizer
 
