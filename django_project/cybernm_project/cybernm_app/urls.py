@@ -17,6 +17,13 @@ urlpatterns = [
     path("Addtournament/", views.AddTournament.as_view()),
     path("Deletetournament/<int:pk>/", views.tournamentsDesytoyView.as_view()),
     path("Updatetournament/<int:pk>/", views.tournamentsUpdateView.as_view()),
+    path("Adddiscipline/", views.AddDiscipline.as_view()),
+    path("Deletediscipline/<int:pk>/", views.disciplineDesytoyView.as_view()),
+    path("Updatediscipline/<int:pk>/", views.disciplineUpdateView.as_view()),
+    path("Addplayer/", views.Addplayer.as_view()),
+    path("Deleteplayer/<pk>/", views.playerDesytoyView.as_view()),
+    path("Updateplayer/<pk>/", views.playerUpdateView.as_view()),
+    path("nicknames", views.nicknamesListView.as_view()),
     path('doc/swagger/', views.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('doc/redoc', views.schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
 ]

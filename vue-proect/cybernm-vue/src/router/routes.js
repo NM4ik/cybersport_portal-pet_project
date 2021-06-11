@@ -82,6 +82,13 @@ export default [
     meta: { layout: 'autorize_layout', requiresAuth: false },
     component: () => import('@/layouts/authorizationLayout/Login.vue'),
   },
+
+  {
+    path: '/SignUp',
+    name: 'SignUp',
+    meta: { layout: 'autorize_layout', requiresAuth: false },
+    component: () => import('@/layouts/authorizationLayout/Signup.vue'),
+  },
   
   
 ];

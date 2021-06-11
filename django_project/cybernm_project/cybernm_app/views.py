@@ -40,6 +40,11 @@ class PlayerRetrieveView(generics.RetrieveAPIView):
     queryset = player.objects.filter()
 
 
+class nicknamesListView(generics.ListAPIView):
+    serializer_class = nicknamesListSeriallizer
+    queryset = player.objects.all()
+
+
 class DisciplineRetrieveView(generics.RetrieveAPIView):
     serializer_class = DisciplineRetrieveSeriallizer
     queryset = discipline.objects.filter()
@@ -49,14 +54,42 @@ class AddTournament(generics.CreateAPIView):
     serializer_class = tournamentsCreateSeriallizer
 
 
+class AddDiscipline(generics.CreateAPIView):
+    serializer_class = disciplineCreateSeriallizer
+
+
 class tournamentsDesytoyView(generics.DestroyAPIView):
     serializer_class = tournamentsRetrieveSeriallizer
     queryset = tournament.objects.filter()
 
 
-class tournamentsUpdateView(generics.UpdateAPIView):
+class tournamentsUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = tournamentsCreateSeriallizer
     queryset = tournament.objects.filter()
+
+
+class disciplineDesytoyView(generics.DestroyAPIView):
+    serializer_class = DisciplineRetrieveSeriallizer
+    queryset = discipline.objects.filter()
+
+
+class disciplineUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = disciplineCreateSeriallizer
+    queryset = discipline.objects.filter()
+
+
+class Addplayer(generics.CreateAPIView):
+    serializer_class = playerCreateSeriallizer
+
+
+class playerDesytoyView(generics.DestroyAPIView):
+    serializer_class = PlayerRetrieveSeriallizer
+    queryset = player.objects.filter()
+
+
+class playerUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = playerCreateSeriallizer
+    queryset = player.objects.filter()
 
 
 schema_view = get_schema_view(

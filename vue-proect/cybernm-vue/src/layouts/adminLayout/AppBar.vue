@@ -15,7 +15,7 @@
         <h2>ADMINPAGE</h2>
       </v-toolbar-items>
 
-      <v-toolbar-buttons>
+      <v-toolbar-items>
         <div class="my-2">
             <v-btn
               class="mr-5"
@@ -25,7 +25,7 @@
               LOG OUT
             </v-btn>
           </div>
-      </v-toolbar-buttons>
+      </v-toolbar-items>
         </v-container>
     </v-toolbar>
 
