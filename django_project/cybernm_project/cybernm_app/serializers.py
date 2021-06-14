@@ -6,6 +6,7 @@ from .models import *
 
 class tournamentsListSeriallizer(serializers.ModelSerializer):
     # discipline_id = serializers.SlugRelatedField(slug_field="discipline_name", read_only=True)
+    # players = serializers.SlugRelatedField(slug_field="nickname", read_only='True')
 
     class Meta:
         model = tournament
@@ -29,14 +30,20 @@ class newsListSeriallizer(serializers.ModelSerializer):
 
 class playersListSeriallizer(serializers.ModelSerializer):
     class Meta:
-        model = player
+        model = User
         fields = "__all__"
 
 
 class nicknamesListSeriallizer(serializers.ModelSerializer):
     class Meta:
-        model = player
-        fields = ("nickname",)
+        model = User
+        fields = ("nickname", "user_id")
+
+
+class usersListSeriallizer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("user_id",)
 
 
 class tournamentsCreateSeriallizer(serializers.ModelSerializer):
@@ -77,7 +84,7 @@ class PlayerRetrieveSeriallizer(serializers.ModelSerializer):
     tournament_player = tournamentsListSeriallizer(many=True, read_only=True)
 
     class Meta:
-        model = player
+        model = User
         fields = "__all__"
 
 
@@ -90,13 +97,16 @@ class DisciplineRetrieveSeriallizer(serializers.ModelSerializer):
 
 class playerCreateSeriallizer(serializers.ModelSerializer):
     class Meta:
-        model = player
+        model = User
         fields = "__all__"
 
-    def create(self, validated_data):
-        saveplayer = player(**validated_data)
-        saveplayer.save()
-        return saveplayer
+    # полная жопа по мануалу
+    #     fields = ("nickname", "user_image", "email", "post", "social_link", "birth_date", "city", "role")
+    #
+    # def create(self, validated_data):
+    #     saveplayer = User(**validated_data)
+    #     saveplayer.save()
+    #     return saveplayer
 
 
 

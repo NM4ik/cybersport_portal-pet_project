@@ -16,11 +16,11 @@
             :items="playersList"
             :search="search"    
         >
-        <template v-slot:item.player_image="{ item }">
+        <template v-slot:item.user_image="{ item }">
           
           <v-avatar size="36px" tile>
             <img
-              :src= "item.player_image"
+              :src= "item.user_image"
               alt="Avatar"
             >
           </v-avatar>
@@ -28,7 +28,7 @@
         </template>
          <template v-slot:item.Actions="{ item }">
               <v-btn depressed color="primary"
-              :to="`/player/${item.nickname}`"
+              :to="`/player/${item.user_id}`"
               >
                   go
                 </v-btn>
@@ -47,9 +47,9 @@
       return {
         search: '',
         headers: [
-          {text: 'player_image', value: 'player_image'},
+          {text: 'player image', value: 'user_image'},
           {text: 'nickname', value: 'nickname'},
-          {text: 'discipline', value: 'discipline_name'},
+          {text: 'name', value: 'first_name'},
           {text: 'game role', value: 'role'},
           { text: 'Actions', value: 'Actions', sortable: false },
         ],
@@ -69,8 +69,7 @@
       ).then(response => response.json())
     },
     goTo(item){
-      console.log(item.nickname)
-      this.$router.push({name: 'player', params: {id: item.nickname}})
+      this.$router.push({name: 'player', params: {id: item.user_id}})
     },
   }
   }

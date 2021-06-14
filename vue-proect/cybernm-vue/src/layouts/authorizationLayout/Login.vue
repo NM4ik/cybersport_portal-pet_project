@@ -21,7 +21,9 @@
         style="border-radius: 10px;
         border-style:none!important;
         "
-        v-model="login"
+        type="text"
+        id="LogIn"
+        v-model="username"
         filled
         label="Login"
       ></v-text-field>
@@ -29,6 +31,7 @@
 
         v-model="password"
         filled
+        id="password"
         color="deep-purple"
         label="Password"
         style="border-radius: 10px;"
@@ -57,7 +60,7 @@
         align-items: center;
         border-radius: 10px;
         "
-        
+        @click="setLogin()"
       >
         Login
       </v-btn>
@@ -91,13 +94,40 @@
 
 
 <script>
+  import $ from 'jquery'
+  
   export default {
+    name: 'Login',
     data: () => ({
-      agreement: false,
-      login: undefined,
+      username: undefined,
       form: false,
       isLoading: false,
       password: undefined,
     }),
+    methods: {
+      async setLogin() {
+        $.ajax({
+          url: `${this.$store.getters.getServerUrl}auth/token/login/`,
+          type: "POST",
+          data: {
+            username: this.username,
+            password: this.password
+          },
+          success: (response) => {
+            localStorage.setItem("auth_token", response.auth_token);
+            if (this.username == "Admin")
+              window.location.replace("/administration");
+            else {
+              window.location.replace("/");
+            }
+          },
+          error: (response) => {
+            if (response.status === 400) {
+              alert("Логин или пароль неверный");
+            }
+          }
+        })
+      }
+    }
   }
 </script>

@@ -185,15 +185,18 @@
                     cols="12"
                     sm="12"
                     md="12">
-                    <v-autocomplete
-                      label="players"
-                      clearable
-                      deletable-chips
-                      multiple
-                      small-chips
-                      v-model="tournament.players"
-                      :items="playersList"
-                    ></v-autocomplete>
+                      <v-autocomplete
+                        label="players"
+                        clearable
+                        deletable-chips
+                        multiple
+                        small-chips
+
+                        :items="playersList"
+                        item-value="user_id"
+                        item-text="username"
+                        v-model="tournament.players"
+                      ></v-autocomplete>
                   </v-col>
                 </v-row>
               </v-container>
@@ -279,7 +282,7 @@
         playersList: [],
         due: null,
         editedIndex: -1,
-        statuses: ['анонсирован', 'проводится', 'закончен'],
+        statuses: ['announced', 'run', 'finished'],
         limitations: ['1-5lvl', '5-8lvl', '8-10lvl'],
 
         tournament: {
@@ -340,15 +343,16 @@
           `${this.$store.getters.getServerUrl}Alltournaments/`
         ).then(response => response.json())
       },
+      
       async LoadPlayers(){
-        let players = await fetch(
-          `${this.$store.getters.getServerUrl}nicknames`
+        this.playersList = await fetch(
+          `${this.$store.getters.getServerUrl}Allplayers/`
         ).then(response => response.json());
-        let i = 0
-        players.forEach(element => {
-          this.playersList[i] = element.nickname
-          i++
-        });
+        // let i = 0
+        // players.forEach(element => {
+        //   this.playersList[i] = element.nickname
+        //   i++
+        // });
       },
 
 
@@ -411,13 +415,13 @@
         }
         
         switch(this.tournament.status) {
-          case 'анонсирован':
+          case 'announced':
             this.tournament.status = 'a'
             break;
-          case 'проводится':
+          case 'run':
             this.tournament.status = 'r'
             break;
-          case 'закончен':
+          case 'finished':
             this.tournament.status = 'e'
             break;
         }
@@ -427,8 +431,9 @@
             if (this.editedIndex > -1) {
                       
           
-          console.log(this.tournament.players)
-          console.log(this.playersList)
+          // console.log(this.tournament.players)
+          // console.log(this.playersList)
+          console.log(this.tournament)
               this.editTournament();              
             } else {
               this.addTournament();

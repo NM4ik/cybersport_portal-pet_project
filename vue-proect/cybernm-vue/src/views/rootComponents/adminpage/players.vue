@@ -38,8 +38,31 @@
                     <v-text-field
                       label="nickname"
                       v-model="player.nickname"
+                      required
                     ></v-text-field>
-                  </v-col>                
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      label="username"
+                      v-model="player.username"
+                      required
+                    ></v-text-field>
+                    <v-col
+                    cols="12"
+                    sm="12"
+                    md="12"
+                  >
+                    <v-text-field
+                      label="password"
+                      v-model="player.password"
+                      required
+                    ></v-text-field>
+                  </v-col>  
+                  </v-col>                  
                   <v-col
                     cols="12"
                     sm="6"
@@ -48,6 +71,7 @@
                     <v-text-field
                       label="first name"
                       v-model="player.first_name"
+                      required
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -57,7 +81,7 @@
                   >
                     <v-text-field
                       label="second name"
-                      v-model="player.second_name"
+                      v-model="player.last_name"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -111,6 +135,7 @@
                       v-model="player.social_link"
                     ></v-text-field>
                   </v-col>
+                  
                 </v-row>
               </v-container>
             </v-card-text>
@@ -137,7 +162,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">Are you sure you want to delete this player?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -159,7 +184,7 @@
         >
           <v-card>
             <v-img
-              :src="card.player_image" alt="player_image"
+              :src="card.user_image" alt="user_image"
               height="300px"
             >
                <span
@@ -220,9 +245,11 @@
         playersList: [],
         player: {
           nickname: '',
+          username: '',
+          password: '',
           first_name: '',
           //player_image: '',
-          second_name: '',
+          last_name: '',
           birth_date: '',
           city: '',
           role: '',
@@ -231,9 +258,11 @@
         },
         defaultItem: {
           nickname: '',
+          username: '',
+          password: '',
           first_name: '',
           //player_image: '',
-          second_name: '',
+          last_name: '',
           birth_date: '',
           city: '',
           role: '',
@@ -284,7 +313,7 @@
       async deleteItemConfirm () {
             await this.LoadListPlayers();
             await fetch(
-                `${this.$store.getters.getServerUrl}Deleteplayer/${this.player.nickname}/`,
+                `${this.$store.getters.getServerUrl}Deleteplayer/${this.player.user_id}/`,
                 {
                   method: 'delete',
                   headers: {
@@ -339,7 +368,7 @@
   
         async editPlayer () {
           await fetch(
-              `${this.$store.getters.getServerUrl}Updateplayer/${this.player.nickname}/`,
+              `${this.$store.getters.getServerUrl}Updateplayer/${this.player.user_id}/`,
               {
                 method: 'put',
                 headers: {

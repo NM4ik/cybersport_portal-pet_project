@@ -4,7 +4,7 @@
         <div class="main_img"><v-img 
         
           class="img-tour"
-          src="https://picsum.photos/510/300?random"
+          :src="tournament.tournament_image"
           aspect-ratio="1.4"
         ></v-img></div>
 
@@ -26,17 +26,22 @@
                 </ul>
             </v-card-text>
             <v-card-actions>
-                <v-btn
-                    class="mr-5 sign_in"
-                    color="#FFA500"
-                    dark
-                    >
-                    SIGN IN
-                </v-btn>
+
+                    <v-btn
+                        @click="signTournament()"
+                        class="mr-5 sign_in"
+                        color="#FFA500"
+                        dark
+                        >
+                        SIGN TO TOURNAMENT
+                    </v-btn>
             </v-card-actions>
             </v-card>
+            
         </div>
+       
     </div>
+    
 
     <v-card flat>
         <v-card-title class="data_input">
@@ -45,11 +50,11 @@
             :headers="headers"
             :items="playersList"
         >
-        <template v-slot:item.player_image="{ item }">
+        <template v-slot:item.user_image="{ item }">
           
           <v-avatar size="36px" tile>
             <img
-              :src= "item.player_image"
+              :src= "item.user_image"
               alt="Avatar"
             >
           </v-avatar>
@@ -123,9 +128,9 @@
         tournament: {},
         search: '',
         headers: [
-          {text: 'player_image', value: 'player_image'},
+          {text: 'player image', value: 'user_image'},
           {text: 'nickname', value: 'nickname'},
-          {text: 'discipline', value: 'discipline_name'},
+          {text: 'name', value: 'first_name'},
           {text: 'game role', value: 'role'},
         ],
         playersList: [],
@@ -135,7 +140,13 @@
   created(){
     //   this.LoadListPlayers()
       this.LoadTournament()
+
   },
+//    watch: {
+//       dialog (val) {
+//         val || this.close()
+//       },
+//     },
 
   methods: {
     //   async LoadListPlayers(){
@@ -150,7 +161,17 @@
         this.playersList = this.tournament.players
         console.log(this.tournament)
         console.log(this.id)
-    } 
+    }, 
+
+    signTournament () {
+            let token = localStorage.getItem("auth_token");
+            if (token) {
+                this.dialog = true
+                alert("Your application has been sent")
+            } else {
+                window.location.replace("/LogIn");
+            }
+        },
   }
   }
 </script>

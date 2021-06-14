@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include, re_path
 
 from cybernm_project import settings
 from . import views
@@ -21,9 +21,12 @@ urlpatterns = [
     path("Deletediscipline/<int:pk>/", views.disciplineDesytoyView.as_view()),
     path("Updatediscipline/<int:pk>/", views.disciplineUpdateView.as_view()),
     path("Addplayer/", views.Addplayer.as_view()),
-    path("Deleteplayer/<pk>/", views.playerDesytoyView.as_view()),
+    path("Deleteplayer/<int:pk>/", views.playerDesytoyView.as_view()),
     path("Updateplayer/<pk>/", views.playerUpdateView.as_view()),
     path("nicknames", views.nicknamesListView.as_view()),
+    path("users", views.usersListView.as_view()),
+    path("auth/", include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('doc/swagger/', views.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('doc/redoc', views.schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
 ]

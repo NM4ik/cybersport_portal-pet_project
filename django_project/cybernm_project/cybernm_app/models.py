@@ -3,6 +3,18 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class User(AbstractUser):
+    user_id = models.AutoField(primary_key=True)
+    nickname = models.CharField(max_length=30)
+    user_image = models.ImageField(verbose_name="Картинка для сотрудника", blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
+    post = models.CharField(max_length=20, blank=True, null=True)
+    social_link = models.CharField(max_length=50, verbose_name="Ссылка на соц. сети", blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    role = models.CharField(max_length=25, blank=True, null=True)
+
+
 class discipline(models.Model):
     game_type = (
         ('st', 'strategy'),
@@ -10,46 +22,22 @@ class discipline(models.Model):
         ('sm', 'simulator'),
     )
     discipline_name = models.CharField(max_length=50)
-    discipline_id = models.IntegerField(primary_key=True)
+    discipline_id = models.AutoField(primary_key=True)
     discipline_image = models.ImageField(verbose_name="Картинка для игры", blank=True, null=True)
     match_seatsnumber = models.IntegerField()
     type = models.CharField(choices=game_type, max_length=50)
     description = models.TextField()
 
 
-class employee(AbstractUser):
-    employee_id = models.IntegerField(primary_key=True)
-    employee_image = models.ImageField(verbose_name="Картинка для сотрудника", blank=True, null=True)
-    first_name = models.CharField(max_length=20)
-    second_name = models.CharField(max_length=20)
-    email = models.CharField(max_length=50)
-    post = models.CharField(max_length=20)
-
-
-class player(models.Model):
-    nickname = models.CharField(max_length=30, primary_key=True)
-    player_image = models.ImageField(verbose_name="Картинка для игрока", blank=True, null=True)
-    first_name = models.CharField(max_length=20)
-    second_name = models.CharField(max_length=20)
-    birth_date = models.DateField()
-    city = models.CharField(max_length=50)
-    role = models.CharField(max_length=25)
-    email = models.CharField(max_length=50)
-    social_link = models.CharField(max_length=50, verbose_name="Ссылка на соц. сети", blank=True, null=True)
-
-    def __str__(self):
-        return self.nickname
-
-
 class tournament(models.Model):
     tournament_status = (
-        ('a', 'анонсирован'),
-        ('r', 'проводится'),
-        ('e', 'закончен'),
+        ('a', 'announced'),
+        ('r', 'run'),
+        ('e', 'finished'),
     )
     status = models.CharField(choices=tournament_status, max_length=20)
-    tournament_id = models.IntegerField(primary_key=True)
-    tournament_image = models.ImageField(verbose_name="Картинка для турнира", blank=True, null=True)
+    tournament_id = models.AutoField(primary_key=True)
+    tournament_image = models.ImageField(verbose_name="image for tournament", blank=True, null=True)
     name = models.CharField(max_length=45)
     seats_number = models.IntegerField()
     prize = models.CharField(max_length=45)
@@ -62,11 +50,11 @@ class tournament(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     discipline_id = models.ForeignKey(discipline, on_delete=models.CASCADE, null=True, related_name='discipline_id_fk',
-                                      verbose_name='Дисциплина')
+                                      verbose_name='discipline')
     employee_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True,
                                     related_name='tournament_employee_id_fk',
-                                    verbose_name='Сотрудник')
-    players = models.ManyToManyField(player, null=True, blank=True, verbose_name="игроки",
+                                    verbose_name='employee')
+    players = models.ManyToManyField(User, null=True, blank=True, verbose_name="players",
                                      related_name="tournament_player")
 
 
@@ -82,7 +70,7 @@ class tournament_participation(models.Model):
     status = models.CharField(choices=status_types, max_length=20)
     participation_id = models.IntegerField()
     reason = models.CharField(max_length=100)
-    nickname = models.ForeignKey(player, on_delete=models.CASCADE, null=True, related_name='nickname_fk',
+    nickname = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='nickname_fk',
                                  verbose_name='Ник игрока')
     tournament_id = models.ForeignKey(tournament, on_delete=models.CASCADE, null=True,
                                       related_name='tournament_id_participation_fk',

@@ -10,10 +10,9 @@
     dark
     >
     <h1 class="h1Login"
-    >Log in</h1>
+    >Sign Up</h1>
     <v-form
       ref="form"
-      v-model="form"
       class="pa-4 pt-6"
     >
 
@@ -21,20 +20,29 @@
         style="border-radius: 10px;
         border-style:none!important;
         "
-        v-model="login"
         color="deep-orange"
+        v-model="username"
         filled
-        label="Login"
+        label="Username"
+        required
+      ></v-text-field>
+        <v-text-field
+        v-model="nickname"
+        filled
+        color="deep-orange"
+        label="game nickname"
+        required
       ></v-text-field>
       <v-text-field
-
         v-model="password"
         filled
         color="deep-orange"
-        label="Password"
+        label="password"
         style="border-radius: 10px;"
         type="password"
+        required
       ></v-text-field>
+
     </v-form>
     <v-card-actions
          style="
@@ -45,8 +53,7 @@
         "
     >
       <v-btn
-        :disabled="!form"
-        :loading="isLoading"
+        @click="setSignup()"
         class="white--text"
         color="#FFA500"
         depressed
@@ -58,11 +65,11 @@
         align-items: center;
         border-radius: 10px;
         "
-        
       >
-        Login
+        signup
       </v-btn>
     </v-card-actions>
+    <a href="/LogIn">Are you already registered? LogIn</a>
     </v-card> 
     </v-container>
 </template>
@@ -86,19 +93,49 @@
     text-align: center;
     padding-top: 10px;
 }
-
+a {
+    color: "deep-orange";
+    text-decoration: none;
+    font-size: 14px;
+  }
 
 </style>
 
 
 <script>
+  import $ from 'jquery'
   export default {
+    name: 'Signup',
+
     data: () => ({
-      agreement: false,
-      login: undefined,
-      form: false,
-      isLoading: false,
+      username: undefined,
+      nickname: undefined,
       password: undefined,
     }),
+
+
+    methods: {
+      async setSignup() {
+        let users = await fetch(
+            `${this.$store.getters.getServerUrl}Allplayers/`
+        ).then(response => response.json())
+        this.user_id = users['length'] + 1;
+        $.ajax({
+          url: `${this.$store.getters.getServerUrl}auth/users/`,
+          type: "POST",
+          data: {
+            username: this.username,
+            nickname: this.nickname,
+            password: this.password,
+          },
+          success: (response) => {
+            window.location.replace("/login");
+          },
+          error: (response) => {
+              alert("Ошибка");
+          }
+        })
+      }
+    }
   }
 </script>

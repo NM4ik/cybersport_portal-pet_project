@@ -4,7 +4,7 @@
         <div class="main_img"><v-img 
         
           class="img-tour"
-          src="https://picsum.photos/510/300?random"
+          :src="User.user_image"
           aspect-ratio="1.4"
         ></v-img></div>
 
@@ -13,27 +13,18 @@
             class="ml-15 v-cards"
             elevation="2"
             >
-            <v-card-title>player:<span>{{ player.nickname }}</span></v-card-title>
-            <v-card-subtitle>discipline: <span>{{ player.discipline_name }}</span></v-card-subtitle>
+            <v-card-title>player:<span>{{ User.nickname }}</span></v-card-title>
             <v-card-text>
                 <ul class="tournament_description">
-                    <li>first_name: <span>{{ player.first_name }}</span></li>
-                    <li>second_name <span>{{ player.second_name }}</span></li>
-                    <li>birth_date: <span>{{ player.birth_date }}</span></li>
-                    <li>city: <span>{{ player.city }}</span></li>
-                    <li>role: <span>{{ player.role }}</span></li>
-                    <li>email: <span>{{ player.email }}</span></li>
+                    <li>first_name: <span>{{ User.first_name }}</span></li>
+                    <li>second_name <span>{{ User.last_name }}</span></li>
+                    <li>birth_date: <span>{{ User.birth_date }}</span></li>
+                    <li>city: <span>{{ User.city }}</span></li>
+                    <li>role: <span>{{ User.role }}</span></li>
+                    <li>email: <span>{{ User.email }}</span></li>
                 </ul>
             </v-card-text>
-            <v-card-actions>
-                <v-btn
-                    class="mr-5 sign_in"
-                    color="#FFA500"
-                    dark
-                    >
-                    SIGN IN
-                </v-btn>
-            </v-card-actions>
+
             </v-card>
         </div>
     </div>
@@ -72,6 +63,10 @@
 </template>
 
 <style scoped>
+
+.tournament_description li{
+    margin-top: 23px!important;
+}
 
 .sign_in{
     margin-left: 24px;
@@ -131,7 +126,7 @@
     data () {
       return {
         id: this.$route.params['id'],
-        player: {},
+        User: {},
         search: '',
         headers: [
           {text: 'icon', value: 'tournament_image'},
@@ -157,11 +152,11 @@
     //   ).then(response => response.json())
     // },
     async LoadPlayer(){
-        this.player = await fetch(
+        this.User = await fetch(
             `${this.$store.getters.getServerUrl}Oneplayer/${this.id}`
         ).then(response => response.json())
-        this.tournamentsList = this.player.tournament_player
-        console.log(this.player)
+        this.tournamentsList = this.User.tournament_player
+        console.log(this.User)
         console.log(this.id)
     },
   }

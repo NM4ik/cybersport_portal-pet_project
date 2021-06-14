@@ -8,8 +8,10 @@
       >
           <h3>TOURNAMENTS</h3>
           <div class="show_all">
+            <router-link to="/tournament">
             <a href="">show all</a>
             <fa class="arrow_d" icon="arrow-right" />
+            </router-link>
           </div>
       </v-card>
 
@@ -31,13 +33,16 @@
           <v-list dense class="v-lists">
           
           <div class="subhead">
+
             <div class="subhead-text">
               <v-subheader>NEWS</v-subheader>
             </div>
+          <router-link to="/news" class="news-link">
             <div class="subhead-link">   
               <a href="">show all</a>
               <fa class="arrow_n" icon="arrow-right" />
             </div>
+             </router-link>
           </div>
             
             <v-list-item-group
@@ -67,6 +72,10 @@
 
 
 <style>
+
+  .news-link{
+    text-decoration: none!important;
+  }
   .v-lists{
     margin-bottom: 100px;
   }

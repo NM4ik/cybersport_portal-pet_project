@@ -17,7 +17,7 @@ class tournamentsListView(generics.ListAPIView):
 
 class playersListView(generics.ListAPIView):
     serializer_class = playersListSeriallizer
-    queryset = player.objects.all()
+    queryset = User.objects.filter(is_staff=False)
 
 
 class newsListView(generics.ListAPIView):
@@ -37,12 +37,17 @@ class tournamentsRetrieveView(generics.RetrieveAPIView):
 
 class PlayerRetrieveView(generics.RetrieveAPIView):
     serializer_class = PlayerRetrieveSeriallizer
-    queryset = player.objects.filter()
+    queryset = User.objects.filter(is_staff=False)
 
 
 class nicknamesListView(generics.ListAPIView):
     serializer_class = nicknamesListSeriallizer
-    queryset = player.objects.all()
+    queryset = User.objects.filter(is_staff=False)
+
+
+class usersListView(generics.ListAPIView):
+    serializer_class = usersListSeriallizer
+    queryset = User.objects.filter(is_staff=False)
 
 
 class DisciplineRetrieveView(generics.RetrieveAPIView):
@@ -79,17 +84,18 @@ class disciplineUpdateView(generics.RetrieveUpdateAPIView):
 
 
 class Addplayer(generics.CreateAPIView):
+    queryset = User.objects.all()
     serializer_class = playerCreateSeriallizer
 
 
 class playerDesytoyView(generics.DestroyAPIView):
     serializer_class = PlayerRetrieveSeriallizer
-    queryset = player.objects.filter()
+    queryset = User.objects.filter()
 
 
 class playerUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = playerCreateSeriallizer
-    queryset = player.objects.filter()
+    queryset = User.objects.filter()
 
 
 schema_view = get_schema_view(

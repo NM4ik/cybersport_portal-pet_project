@@ -20,14 +20,21 @@
             @click:row="goTo"
             >
 
+            <template v-slot:item.status="{ item }">
+              <v-chip
+                :color="getColor(item.status)"
+                dark
+              >
+                {{item.status}}
+              </v-chip>
+            </template>
+            
             
             <template v-slot:item.tournament_image="{ item }">  
-                <v-avatar size="48px" tile>
+                <v-avatar size="48px" >
                     <img :src= "item.tournament_image" alt="Avatar">
                 </v-avatar>
             </template>
-
-
             <template v-slot:item.tournament_id="{ item }">
               <v-btn depressed color="primary"
               :to="`/tournament/${item.tournament_id}`"
@@ -57,14 +64,22 @@
           { text: 'Actions', value: 'tournament_id', sortable: false },
         ],
         tournamentsList: [],
+        DisciplineList: [],
       }
     },
 
   created(){
     this.LoadListtournament()
+    this.LoadDisciplines()
   },
 
   methods: {
+
+     getColor (status) {
+        if (status == 'announced') return 'orange'
+        else if (status == 'run') return 'green'
+        else return 'red'
+      },
   
     async LoadListtournament(){
       this.tournamentsList = await fetch(

@@ -47,25 +47,58 @@
     </v-menu>
           </v-toolbar-items>
 
+          <div class="profile">
 
-      <v-toolbar-items>
-        <div class="my-2">
-            <v-btn
-              class="mr-5"
-              color="#FFA500"
-              dark
-            >
-              SIGN IN
-            </v-btn>
+            <div v-if="this.block==1">
+              <v-toolbar-items>
+                <div class="my-2">
+                  <router-link to="/LogIn" class="linksignin"><v-btn
+                      class="mr-5"
+                      color="#FFA500"
+                      dark
+                    >
+                      SIGN IN
+                    </v-btn></router-link>
+                    
 
-            <v-btn
-              color="#F1E1C2"
-              dark
-            >
-              <span class="button_signup">SIGN UP</span>
-            </v-btn>
+                    <v-btn
+                      color="#F1E1C2"
+                      dark
+                    >
+                      <span class="button_signup">SIGN UP</span>
+                    </v-btn>
+                  </div>
+              </v-toolbar-items>
+            </div>
+            <div class="profile d-flex" v-else-if="this.block == 2">
+              
+              
+              <div class="profile_info">
+                    <p class="name">{{username}}</p>
+                    <p class="post">{{role}}</p>
+                </div>
+                <div v-if="username=='admin'">
+                <router-link to="administration" class="linkadmin">
+                  <v-btn
+                      depressed
+                      color="orange ml-4 text white--text"
+                  >
+                      Admin panel
+                  </v-btn>
+                </router-link>
+              </div>
+                <v-btn
+                    depressed
+                    color="orange ml-4 text white--text"
+                    @click="logout()"
+                >
+                    Log out
+                </v-btn>
+              </div>
           </div>
-      </v-toolbar-items>
+
+
+
         </v-container>
     </v-toolbar>
 
@@ -76,14 +109,79 @@
 
 
 <script>
-export default {
-  data() {
-    return {};
-  },
-};
+    import $ from 'jquery'
+  export default {
+    data () {
+      return {
+        block: 1,
+        username: '',
+        role: ''
+      }
+    },
+
+    created () {
+        this.isLogin()
+    },
+    methods: {
+        async isLogin () {
+            let token = localStorage.getItem("auth_token");
+            if (token) {
+                this.block = 2
+                $.ajax({
+                    url: `${this.$store.getters.getServerUrl}auth/users/me`,
+                    type: "GET",
+                    headers: {
+                        Authorization: "Token "+token
+                    },
+                    success: (response) => {
+                        this.username = response.username;
+                        if (response.post)
+                            this.role = response.post;
+                        else if (this.username == "admin")
+                            this.role = 'Admin account'
+                        else 
+                            this.role = 'Guest'
+                    },
+                    error: (response) => {
+                        
+                    }
+                });
+            } else {
+                this.block = 1
+            }
+        },
+        logout () {
+            localStorage.removeItem("auth_token");
+            window.location.replace("/");
+        }
+    }
+  }
 </script>
 
 <style>
+.linkadmin{
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+
+.name{
+  color:#FFA500;
+}
+
+.post{
+  font-size: 12px;
+}
+
+.profile{
+  align-items: center!important;
+}
+.profile_info p{
+  margin-bottom: 0px!important;
+}
+.linksignin{
+   text-decoration: none;
+}
 
   .b_list{
     text-align: center;
