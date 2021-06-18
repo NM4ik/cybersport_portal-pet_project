@@ -1,0 +1,20 @@
+site_name: Описание сервиса CYBERNM
+nav:
+ - Home: index.md
+ - API:
+     - "Tournaments/": api/alltournaments.md
+     - "Disciplines/": api/alldisciplines.md
+     - "Players/": api/allplayers.md
+     - "PlayerCreate/": api/create_player.md
+     - "PlayerUpdate/": api/update_player.md
+     - "PlayerDelete/": api/delete_player.md
+
+
+ - FRONT:
+     - "LogIn": front/Login.md
+     - "SignUp": front/Signup.md
+     - "index/disciplines": front/disciplines.md
+     - "index/news": front/news.md
+
+theme:
+ name: material

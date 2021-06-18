@@ -65,7 +65,7 @@
                       color="#F1E1C2"
                       dark
                     >
-                      <span class="button_signup">SIGN UP</span>
+                      <router-link to="/SignUp"><span class="button_signup">SIGN UP</span></router-link>
                     </v-btn>
                   </div>
               </v-toolbar-items>
