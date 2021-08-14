@@ -1,5 +1,8 @@
 # CYBERNM
 ## Documentation
+
+#Pet project. Short description: display of cyber disciplines, news, players. Admin panel for editing existing tables. Registration for tournaments and display of players #participating in the tournament.
+
 MkDocs
 ```
 https://nm4ik.github.io/DRF-VUE.js/
