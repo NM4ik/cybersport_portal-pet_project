@@ -53,13 +53,13 @@ export default [
     component: () => import("@/views/publicComponents/homepage/news-page.vue"),
   },
 
-  {
-    path: "/news/:id",
-    name: "news",
-    meta: { layout: "public_layout" },
-    component: () =>
-      import("@/views/publicComponents/homepage/onenews-page.vue"),
-  },
+  // {
+  //   path: "/news/:id",
+  //   name: "news",
+  //   meta: { layout: "public_layout" },
+  //   component: () =>
+  //     import("@/views/publicComponents/homepage/onenews-page.vue"),
+  // },
 
   {
     path: "/player/:id",

@@ -99,14 +99,14 @@ class playerUpdateView(generics.RetrieveUpdateAPIView):
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="API",
-      default_version='v2',
-      description="Description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="hardbeat34@gmail.com"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="API",
+        default_version='v2',
+        description="Description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="hardbeat34@gmail.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )

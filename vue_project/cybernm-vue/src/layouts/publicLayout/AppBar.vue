@@ -40,24 +40,7 @@
       </v-toolbar-items>
 
       <div class="profile">
-        <div v-if="this.block == 1">
-          <v-toolbar-items>
-            <div class="my-2">
-              <router-link to="/LogIn" class="linksignin"
-                ><v-btn class="mr-5" color="#FFA500" dark>
-                  SIGN IN
-                </v-btn></router-link
-              >
-
-              <v-btn color="#F1E1C2" dark>
-                <router-link to="/SignUp"
-                  ><span class="button_signup">SIGN UP</span></router-link
-                >
-              </v-btn>
-            </div>
-          </v-toolbar-items>
-        </div>
-        <div class="profile d-flex" v-else-if="this.block == 2">
+        <div v-if="auth" class="profile d-flex">
           <div class="profile_info">
             <p class="name">{{ username }}</p>
             <p class="post">{{ role }}</p>
@@ -77,6 +60,24 @@
             Log out
           </v-btn>
         </div>
+
+        <div v-else>
+          <v-toolbar-items>
+            <div class="my-2">
+              <router-link to="/LogIn" class="linksignin"
+                ><v-btn class="mr-5" color="#FFA500" dark>
+                  SIGN IN
+                </v-btn></router-link
+              >
+
+              <v-btn color="#F1E1C2" dark>
+                <router-link to="/SignUp"
+                  ><span class="button_signup">SIGN UP</span></router-link
+                >
+              </v-btn>
+            </div>
+          </v-toolbar-items>
+        </div>
       </div>
     </v-container>
   </v-toolbar>
@@ -90,6 +91,7 @@ export default {
       block: 1,
       username: "",
       role: "",
+      auth: true,
     };
   },
 
@@ -100,7 +102,7 @@ export default {
     async isLogin() {
       let token = localStorage.getItem("auth_token");
       if (token) {
-        this.block = 2;
+        this.auth;
         $.ajax({
           url: `${this.$store.getters.getServerUrl}auth/users/me`,
           type: "GET",
@@ -116,7 +118,7 @@ export default {
           error: (response) => {},
         });
       } else {
-        this.block = 1;
+        this.auth = false;
       }
     },
     logout() {
